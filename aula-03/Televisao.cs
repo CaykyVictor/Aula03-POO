@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace aula_03;
 
 class Televisao
@@ -11,8 +13,22 @@ class Televisao
     //visibilidades e recebendo parametros, se necessário.
     public Televisao(float tamanho)
     {
+        if (tamanho < TAMANHO_MINIMO || tamanho > TAMANHO_MINIMO)
+        {   
+            //Uma exceção interrompe o fluxo normal do sistema.
+            throw new ArgumentOutOfRangeException($"O tamanho ({tamanho}) não é suportado.");
+        }
         Tamanho = tamanho;
+        Volume = VOLUME_PADRAO;
     }
+
+    //Optamos pela utilização da constante para tornar o código mais
+    private const float TAMANHO_MINIMO = 22;
+    private const float TAMANHO_MAXIMO = 80;
+    private int VOLUME_MAXIMO = 12;
+    private int VOLUME_MINIMO = 0;
+    private int VOLUME_PADRAO = 10;
+
 
 
     //Get: permite que seja executada a
@@ -27,7 +43,34 @@ class Televisao
     //private: visiveis somente na classe que foram criados
     public float Tamanho { get; private set; }
     public int Resolucao { get; set; }
-    public int Volume { get; set; }
+    public int Volume { get; private set; }
     public int Canal { get; set; }
     public bool Estado { get; set; }
+    
+    public void AumentarVolume()
+    {
+
+        Tamanho = 1_0000;
+
+        if(Volume < VOLUME_MAXIMO)
+        {
+            Volume++;
+        }
+        else
+        { 
+            Console.WriteLine("A TV já está no volume máximo permitido");
+        }
+    }
+
+    public void DiminuirVolume();
+    {
+        if (Volume > VOLUME_MINIMO)
+        {
+            Volume--;
+        }
+        else
+        {
+            Console.WriteLine("Esse é o volume minimo da TV");
+        }
+    }
 }
